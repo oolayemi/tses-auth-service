@@ -45,6 +45,11 @@ LOGGING = {
             "level": "DEBUG",
             "propagate": False,
         },
+        "celery": {
+            "handlers": ["console"],
+            "level": "INFO",
+            "propagate": False,
+        },
     },
     # Root logger for all other logs
     "root": {

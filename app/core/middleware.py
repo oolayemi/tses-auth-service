@@ -7,7 +7,6 @@ from drf_standardized_errors.types import ErrorResponse
 logger = logging.getLogger(__name__)
 
 
-
 class DrfExceptionFormatter(ExceptionFormatter):
     def format_error_response(self, error_response: ErrorResponse):
         error = error_response.errors[0]

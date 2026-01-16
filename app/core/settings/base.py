@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     "storages",
     "rest_framework",
     "django_filters",
-    "import_export",
     "debug_toolbar",
     "drf_spectacular",
     "django_extensions",
@@ -64,7 +63,6 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = "core.urls"
-IMPORT_EXPORT_USE_TRANSACTIONS = True
 
 TEMPLATES = [
     {
@@ -97,6 +95,8 @@ JAZZMIN_SETTINGS = {
     "site_header": APP_DESCRIPTION,
 }
 
+STATIC_URL = "/static/"
+
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
@@ -125,5 +125,3 @@ USE_TZ = True
 
 # Others
 TOKEN_LIFESPAN = 24 * 7  # hours
-
-ENVIRONMENT_INSTANCE = os.environ.get("ENVIRONMENT_INSTANCE", "dev")

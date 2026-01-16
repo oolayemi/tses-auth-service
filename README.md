@@ -10,11 +10,11 @@ January 15, 2026
 Clone the repo:
 
 ```bash
-git clone https://github.com/capitalsagetechnology/py-api-template.git
-cd py-api-template
+git clone https://github.com/oolayemi/tses-auth-service.git
+cd tses-auth-service
 ```
 
-Create your `.env` from the `.env.sample`.
+Create your `.env` from the `.env.example`.
 
 ---
 
@@ -32,6 +32,7 @@ uv python list
 uv venv
 source .venv/bin/activate
 uv sync
+````
 
 ---
 

@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
-from common.views import health_check, readiness_check
+from common.views import readiness_check
 from django.contrib import admin
 from django.urls import include, path
 from drf_spectacular.views import (
@@ -33,7 +33,6 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("__debug__/", include("debug_toolbar.urls")),
     path("api/readiness/", readiness_check, name="readiness_check"),
-    path("api/health/", health_check, name="health_check"),
 
     path("api/v1/auth/", include('account.v1.urls.auth')),
     path("api/v1/audit/", include('audit.v1.urls')),

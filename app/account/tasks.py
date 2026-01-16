@@ -1,6 +1,9 @@
-from core.celery import APP
+import logging
+from celery import shared_task
+
+logger = logging.getLogger(__name__)
 
 
-@APP.task()
+@shared_task
 def send_otp_email(email, otp):
-    print(f'sending otp - {otp} to email - {email}')
+    logger.info(f"Sending OTP of '{otp}' to {email}")

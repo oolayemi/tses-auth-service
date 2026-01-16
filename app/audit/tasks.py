@@ -1,8 +1,10 @@
+from celery import shared_task
+
 from audit.models import AuditLog
 from core.celery import APP
 
 
-@APP.task()
+@shared_task
 def write_audit_log(event: str, email: str, ip: str, meta: dict, user_agent: str | None = None):
     AuditLog.objects.create(
         event=event,

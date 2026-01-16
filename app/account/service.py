@@ -36,8 +36,6 @@ class OtpService:
             user_agent=user_agent,
         )
 
-        print(otp)
-
         return {
             "expires_in": OTP_TTL_SECONDS,
             "expires_at": timezone.now() + timedelta(seconds=OTP_TTL_SECONDS),

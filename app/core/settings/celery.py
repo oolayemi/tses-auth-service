@@ -15,11 +15,6 @@ CELERY_ACCEPT_CONTENT = ["json"]
 CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
 CELERY_TASK_RESULT_EXPIRES = 18000
 
-CELERY_QUEUES = (Queue("reversal_queue", Exchange("reversal"), routing_key="reversal"),)
-CELERY_ROUTES = {
-    "transaction.tasks.reverse_transaction_task": {"queue": "reversal_queue"},
-}
-
 CELERY_TASK_DEFAULT_QUEUE = "default"
 
 FLOWER_BASIC_AUTH = os.environ.get("FLOWER_BASIC_AUTH")
@@ -47,11 +42,4 @@ CHANNEL_LAYERS = {
         },
         # 'ROUTING': 'core'
     },
-}
-
-CELERY_BEAT_SCHEDULE = {
-    "run_terminal_auto_debit": {
-        "task": "wallet.tasks.run_auto_debit_process",
-        "schedule": crontab(minute="0", hour="0", day_of_month="*"),
-    }
 }

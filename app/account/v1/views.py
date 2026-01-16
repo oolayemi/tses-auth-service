@@ -13,6 +13,7 @@ class AuthViewSet(viewsets.GenericViewSet):
     @action(methods=['POST'], detail=False, serializer_class=RequestOtpSerializer, url_path='request',
             permission_classes=[AllowAny], throttle_classes=[EmailOTPThrottle, IPOTPThrottle])
     def request_otp(self, request):
+        """ Used to request for an otp """
         serializer = self.get_serializer(data=request.data, context={"request": request})
         serializer.is_valid(raise_exception=True)
         data = serializer.save()
@@ -22,6 +23,7 @@ class AuthViewSet(viewsets.GenericViewSet):
     @action(methods=['POST'], detail=False, serializer_class=VerifyOtpSerializer, url_path='verify',
             permission_classes=[AllowAny])
     def verify_otp(self, request):
+        """ Used to verify for an otp against email """
         serializer = self.get_serializer(data=request.data, context={"request": request})
         serializer.is_valid(raise_exception=True)
         data = serializer.save()

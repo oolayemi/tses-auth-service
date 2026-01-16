@@ -6,25 +6,6 @@ from account.service import OtpService
 User = get_user_model()
 
 
-class TokenDecodeSerializer(serializers.Serializer):
-    token = serializers.CharField(required=True)
-
-
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = [
-            "id",
-            "fullname",
-            "email",
-            "role",
-            "image",
-            "email_verified",
-            "is_profile_completed",
-            "last_login",
-            "created_at",
-        ]
-
 class RequestOtpSerializer(serializers.Serializer):
     email = serializers.EmailField(required=True)
 
