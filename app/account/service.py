@@ -1,6 +1,7 @@
 from datetime import timedelta
 
 from django.contrib.auth import get_user_model
+from rest_framework import status
 from rest_framework.exceptions import ValidationError
 
 from django.core.cache import cache
@@ -51,7 +52,8 @@ class OtpService:
             retry_after = cache.ttl(failed_key)
             raise CustomThrottled(
                 message="OTP verification locked",
-                retry_after=retry_after
+                retry_after=retry_after,
+                status_code=status.HTTP_423_LOCKED
             )
 
         stored_otp = cache.get(otp_key)
