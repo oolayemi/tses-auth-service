@@ -1,7 +1,9 @@
+import logging
 from celery import shared_task
 
 from audit.models import AuditLog
-from core.celery import APP
+
+logger = logging.getLogger(__name__)
 
 
 @shared_task
@@ -14,4 +16,4 @@ def write_audit_log(event: str, email: str, ip: str, meta: dict, user_agent: str
         metadata=meta,
     )
 
-    print(f'Done writing audit log event - {event} for email - {email}')
+    logger.info(f'Done writing audit log event - {event} for email - {email}')

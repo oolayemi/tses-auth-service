@@ -3,7 +3,30 @@ from email_validator import EmailNotValidError, validate_email
 from rest_framework import serializers
 
 from account.service import OtpService
+
 User = get_user_model()
+
+
+class OTPResponseDataSerializer(serializers.Serializer):
+    expires_in = serializers.IntegerField(help_text="OTP validity duration in seconds")
+    expires_at = serializers.DateTimeField(help_text="OTP expiration timestamp (UTC)")
+
+
+class OTPResponseSerializer(serializers.Serializer):
+    success = serializers.BooleanField(default=True)
+    message = serializers.CharField()
+    data = OTPResponseDataSerializer()
+
+
+class VerifyOTPResponseDataSerializer(serializers.Serializer):
+    access = serializers.CharField()
+    refresh = serializers.CharField()
+
+
+class VerifyOTPResponseSerializer(serializers.Serializer):
+    success = serializers.BooleanField(default=True)
+    message = serializers.CharField()
+    data = VerifyOTPResponseDataSerializer()
 
 
 class RequestOtpSerializer(serializers.Serializer):
