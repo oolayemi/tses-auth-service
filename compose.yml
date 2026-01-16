@@ -1,0 +1,75 @@
+name: "tses-auth"
+
+services:
+  db:
+    image: postgres:17-alpine
+    platform: linux/amd64
+    ports:
+      - '60432:5432'
+    env_file:
+      - ./.env
+    healthcheck:
+      test: [ "CMD", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  web:
+    build:
+      context: .
+      dockerfile: docker/web/Dockerfile
+    image: oolayemi/tses-auth
+    command: python3 manage.py runserver 0.0.0.0:58000
+    volumes:
+      - ./app:/app
+    expose:
+      - "58000"
+    scale: 1
+    env_file:
+      - ./.env
+    environment:
+      - DJANGO_SETTINGS_MODULE=core.settings
+    restart: always
+    depends_on:
+      - db
+      - redis
+
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - web
+    ports:
+      - "58001:58001"
+
+  redis:
+    image: redis:7-alpine
+    #    platform: linux/amd64
+    ports:
+      - "41381:6379"
+    volumes:
+      - redis-data:/data
+    env_file:
+      - ./.env
+
+  dashboard:
+    build:
+      context: .
+      dockerfile: docker/celery/Dockerfile-celery
+    command: celery --broker=${CELERY_BROKER_URL} flower --port=5555
+    ports:
+      - "60555:5555"
+    environment:
+      - DJANGO_SETTINGS_MODULE=core.settings
+    env_file:
+      - ./.env
+    depends_on:
+      - web
+      - redis
+
+volumes:
+  db-data:
+  redis-data:
